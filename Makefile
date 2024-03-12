@@ -6,9 +6,10 @@
 ##
 
 
-SRC	=	button.c	\
-		drop_menu.c	\
-		init.c		\
+SRC	=	button.c			\
+		drop_menu.c			\
+		drop_menu_list.c	\
+		init.c				\
 		main.c
 
 OBJ	=	$(SRC:.c=.o)
@@ -46,17 +47,17 @@ fclean:	clean
 
 re:	fclean all
 
-debug:	CFLAGS += -ggdb3
+debug:	CFLAGS += -g3
 debug:	re
 
-asan:	CC	=	clang -fsanitize=address
-asan:	re
+gdb: debug
+	gdb -ex "run" -ex "bt full" -ex "detach" -ex "quit" $(NAME)
 
 coding_style:	fclean
 	coding-style . . > /dev/null 2>&1
 	cat $(CS_REPORT)
 	make fclean  > /dev/null 2>&1
 
-.PHONY: all clean fclean re debug asan coding_style
+.PHONY: all clean fclean re debug coding_style
 
 .SILENT: coding_style

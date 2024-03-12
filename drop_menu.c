@@ -6,8 +6,19 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "include/struct.h"
 #include "include/my_paint.h"
+
+void disp_drop_menu(sfRenderWindow *window, s_gui_drop_menu_t *menu)
+{
+    s_gui_options_t *temp = menu->options;
+
+    while (temp) {
+        sfRenderWindow_drawRectangleShape(window, temp->option->rect, NULL);
+        temp = temp->next;
+    }
+}
 
 static int delete_menu(s_gui_drop_menu_t *menu)
 {
@@ -16,9 +27,10 @@ static int delete_menu(s_gui_drop_menu_t *menu)
     while (temp->options->next) {
         sfRectangleShape_destroy(temp->options->option->rect);
         free(temp->options->option);
-        temp = temp->options->next;
+        temp->options = temp->options->next;
     }
     free(temp);
+    return 0;
 }
 
 static int delete_option(s_gui_drop_menu_t **menu, int option_id)
@@ -27,11 +39,11 @@ static int delete_option(s_gui_drop_menu_t **menu, int option_id)
 
     if (temp->options->id == option_id) {
         free((*menu)->options->option);
-        *menu = (*menu)->options->next;
+        (*menu)->options = (*menu)->options->next;
         return SUCCESS_EXIT;
     }
     while (temp->options->next && temp->options->id != option_id)
-        temp = temp->options->next;
+        temp->options = temp->options->next;
     if (temp->options->next) {
         free(temp->options->option);
         temp->options->next = temp->options->next->next;
@@ -51,6 +63,7 @@ static int insert_option(s_gui_drop_menu_t *menu, button_t *new_option)
         new_option_list->next = NULL;
     else
         new_option_list->next = menu->options;
+    new_option_list->option = malloc(sizeof(s_gui_options_t));
     new_option_list->option = new_option;
     new_option_list->id = id;
     id++;
@@ -64,8 +77,7 @@ s_gui_drop_menu_t *new_drop_menu(button_t *menu_button)
 
     new_menu->button = malloc(sizeof(button_t));
     new_menu->options = malloc(sizeof(s_gui_options_t));
-    new_menu->button = NULL;
-    new_menu->options->option = malloc(sizeof(button_t));
+    new_menu->button = menu_button;
     new_menu->options->option = NULL;
     new_menu->options->next = NULL;
     new_menu->insert_option = &insert_option;

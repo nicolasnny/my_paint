@@ -43,5 +43,7 @@ button_t *init_button(sfVector2f position, sfVector2f size)
     sfRectangleShape_setFillColor(new_button->rect, sfRed);
     new_button->is_clicked = &is_clicked;
     new_button->is_hover = &is_hover;
+    new_button->collidable = true;
+    new_button->state = NONE;
     return new_button;
 }
