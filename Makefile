@@ -6,7 +6,8 @@
 ##
 
 
-SRC	=	button.c			\
+SRC	=	button.c	\
+		drop_menu.c	\
 		init.c		\
 		main.c
 
@@ -14,24 +15,34 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	=	my_paint
 
-INCLUDES	=	-iquote./src/include
+LDFLAGS =	-L./lib/my
 
-CPPFLAGS	=	$(INCLUDES) 
+LDLIBS	=	-lmy -l csfml-graphics -l csfml-window -l csfml-system
+
+LIBNAME	=	libmy.a
+
+CPPFLAGS	=	-iquote./src/include
 
 CFLAGS	=	-Wall -Wextra
 
-CS_CLEAN = *.log
+CS_REPORT = coding-style-reports.log
 
-all:	$(NAME)
+all:	lib	$(NAME)
+
+lib: fclean
+	$(MAKE) -C lib/my
 
 $(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(OBJ) -l csfml-graphics -l csfml-window -l csfml-system
+	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:
 	$(RM) $(OBJ)
+	$(MAKE) -C lib/my clean
 
 fclean:	clean
+	$(MAKE) -C lib/my fclean
 	$(RM) $(NAME)
+	$(RM) $(CS_REPORT)
 
 re:	fclean all
 
