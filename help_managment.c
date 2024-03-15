@@ -10,10 +10,14 @@
 
 int disp_about(surface_t *surface, sfRenderWindow *window)
 {
+    (void)surface;
+    (void)window;
     return SUCCESS_EXIT;
 }
 
 int disp_help(surface_t *surface, sfRenderWindow *window)
 {
+    (void)surface;
+    (void)window;
     return SUCCESS_EXIT;
 }

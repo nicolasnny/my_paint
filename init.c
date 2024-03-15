@@ -31,7 +31,9 @@ static void check_color_events(sfRenderWindow *window,
             &event->mouseButton)) {
             set_color(surface, window, colors->menu->button);
     }
-    colors->menu->button->is_hover(colors->menu->button, &event->mouseMove);
+    if (event->type == sfEvtMouseMoved)
+        colors->menu->button->is_hover(colors->menu->button,
+            &event->mouseMove);
     check_drawing(surface, (sfWindow *)window);
 }
 
@@ -48,14 +50,14 @@ static button_list_t *init_buttons(void)
 static void check_events(sfRenderWindow *window, surface_t *surface,
     button_list_t *buttons)
 {
-    sfEvent *event = malloc(sizeof(sfEvent));
+    sfEvent event;
 
-    while (sfRenderWindow_pollEvent(window, event)){
-        if (event->type == sfEvtClosed)
+    while (sfRenderWindow_pollEvent(window, &event)){
+        if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
-        check_file_events(window, surface, buttons->file_buttons, event);
-        check_color_events(window, surface, buttons->colors, event);
-        check_edit_events(window, surface, buttons->edit_buttons, event);
+        check_file_events(window, surface, buttons->file_buttons, &event);
+        check_color_events(window, surface, buttons->colors, &event);
+        check_edit_events(window, surface, buttons->edit_buttons, &event);
     }
     check_menu_disp(window, buttons->file_buttons);
     check_menu_disp(window, buttons->colors);
@@ -65,7 +67,8 @@ static void check_events(sfRenderWindow *window, surface_t *surface,
 int init(void)
 {
     sfRenderWindow *window = sfRenderWindow_create(
-        (sfVideoMode){1920, 1080, 32}, "paint", sfResize | sfClose, NULL);
+        (sfVideoMode){DEFAULT_WIDTH, DEFAULT_HEIGHT, 32}, PROG_NAME,
+            sfResize | sfClose, NULL);
     surface_t *surface = init_surface();
     button_list_t *buttons = init_buttons();
 
@@ -75,5 +78,6 @@ int init(void)
         sfRenderWindow_drawSprite(window, surface->surface_sprite, NULL);
         sfRenderWindow_display(window);
     }
+    destroy_all(window, buttons, surface);
     return 0;
 }

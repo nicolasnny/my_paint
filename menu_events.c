@@ -22,7 +22,7 @@ static void check_options_clicked(drop_menu_list_t *menu,
         if (temp->option && temp->option->state == PRESSED &&
             temp->option->functionnality && temp->option->collidable)
             temp->option->functionnality(surface, window);
-        if (temp->option)
+        if (temp->option && event->type == sfEvtMouseMoved)
             temp->option->is_hover(temp->option, &event->mouseMove);
         temp = temp->next;
     }
@@ -60,8 +60,9 @@ void check_menu_clicked(drop_menu_list_t *menu_list, sfEvent *event,
         if (temp_menu_list->menu->button->state == PRESSED &&
                     temp_menu_list->menu->button->functionnality)
             temp_menu_list->menu->button->functionnality(surface, window);
-        temp_menu_list->menu->button->is_hover(
-                temp_menu_list->menu->button, &event->mouseMove);
+        if (temp_menu_list->menu->button && event->type == sfEvtMouseMoved)
+            temp_menu_list->menu->button->is_hover(
+                    temp_menu_list->menu->button, &event->mouseMove);
         check_options_clicked(temp_menu_list, surface, event, window);
         temp_menu_list = temp_menu_list->next;
     }

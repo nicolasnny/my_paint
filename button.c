@@ -96,6 +96,6 @@ button_t *init_button(sfVector2f position, sfVector2f size,
     new_button->image = NULL;
     new_button->name = NULL;
     sfRectangleShape_setOutlineColor(new_button->rect, sfBlack);
-    sfRectangleShape_setOutlineThickness(new_button->rect, 2.5);
+    sfRectangleShape_setOutlineThickness(new_button->rect, OUTLINE_THICKNESS);
     return new_button;
 }

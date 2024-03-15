@@ -13,13 +13,13 @@
 
 void clear_surface(surface_t *surface)
 {
-    sfUint8 *pixel_array = malloc(sizeof(sfUint8) * 4 *
+    sfUint8 *pixel_array = malloc(sizeof(sfUint8) * RGBA *
         SURFACE_WIDTH * SURFACE_HEIGHT + 1);
 
     sfImage_destroy(surface->surface_image);
     sfTexture_destroy(surface->surface_texture);
     sfSprite_destroy(surface->surface_sprite);
-    memset(pixel_array, 255, sizeof(sfUint8) * 4 * SURFACE_WIDTH *
+    memset(pixel_array, 255, sizeof(sfUint8) * RGBA * SURFACE_WIDTH *
         SURFACE_HEIGHT + 1);
     surface->surface_image = sfImage_createFromPixels(SURFACE_WIDTH,
         SURFACE_HEIGHT, pixel_array);
@@ -35,10 +35,10 @@ void clear_surface(surface_t *surface)
 surface_t *init_surface(void)
 {
     surface_t *surface = malloc(sizeof(surface_t));
-    sfUint8 *pixel_array = malloc(sizeof(sfUint8) * 4 *
+    sfUint8 *pixel_array = malloc(sizeof(sfUint8) * RGBA *
         SURFACE_WIDTH * SURFACE_HEIGHT + 1);
 
-    memset(pixel_array, 255, sizeof(sfUint8) * 4 * SURFACE_WIDTH *
+    memset(pixel_array, 255, sizeof(sfUint8) * RGBA * SURFACE_WIDTH *
         SURFACE_HEIGHT + 1);
     surface->surface_image = sfImage_createFromPixels(SURFACE_WIDTH,
         SURFACE_HEIGHT, pixel_array);
@@ -59,7 +59,7 @@ static void color_pixels(surface_t *surface, sfVector2i *coords, int size)
 {
     for (int i = coords->x; i != coords->x + size; i++) {
         for (int j = coords->y; j != coords->y + size &&
-            j + size < DEFAULT_HEIGHT - 270; j++)
+            j + size < DEFAULT_HEIGHT - BOTTOM_GAP; j++)
             sfImage_setPixel(surface->surface_image, i, j, surface->color);
     }
     sfTexture_updateFromImage(surface->surface_texture,
@@ -95,10 +95,8 @@ void check_drawing(surface_t *surface, sfWindow *window)
     sfVector2i mouse_coords = sfMouse_getPosition(window);
     sfVector2i adjusted_coords;
 
-    adjusted_coords.x = mouse_coords.x - (DEFAULT_WIDTH / 2 -
-        SURFACE_WIDTH / 2);
-    adjusted_coords.y = mouse_coords.y - (DEFAULT_HEIGHT / 2 -
-        SURFACE_HEIGHT / 2 + 100);
+    adjusted_coords.x = mouse_coords.x - X_OFFSET;
+    adjusted_coords.y = mouse_coords.y - Y_OFFSET;
     if (sfMouse_isButtonPressed(sfMouseLeft))
         draw_on_image(surface, &adjusted_coords);
 }

@@ -42,8 +42,8 @@ s_gui_drop_menu_t *init_edit_menu(void)
         (sfVector2f){150, 70}, &set_rubber);
 
     set_button_text(edit_menu_button, "EDIT");
-    set_button_image(pencil_button, "assets/pencil.png");
-    set_button_image(rubber_button, "assets/rubber.png");
+    set_button_image(pencil_button, PENCIL_PATH);
+    set_button_image(rubber_button, RUBBER_PATH);
     edit_menu = new_drop_menu(edit_menu_button);
     edit_menu->insert_option(edit_menu, pencil_button);
     edit_menu->insert_option(edit_menu, rubber_button);

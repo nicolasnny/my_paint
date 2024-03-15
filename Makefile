@@ -16,6 +16,7 @@ SRC	=	button.c			\
 		file_managment.c	\
 		help_managment.c	\
 		edit_buttons.c		\
+		destroy.c			\
 		menu_events.c		\
 		draw.c				\
 		init.c				\

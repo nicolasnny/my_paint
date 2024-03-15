@@ -11,11 +11,20 @@
     #define SUCCESS_EXIT 0
     #define DEFAULT_WIDTH 1920
     #define DEFAULT_HEIGHT 1080
+    #define PROG_NAME "mypaint"
     #define SURFACE_WIDTH 1880
     #define SURFACE_HEIGHT 800
     #define DEFAULT_BRUSH_SIZE 10
-    #define X_OFFSET DEFAULT_WIDTH / 2 - SURFACE_WIDTH / 2
-    #define Y_OFFSET DEFAULT_HEIGHT / 2 - SURFACE_HEIGHT / 2 + 100
+    #define X_OFFSET (DEFAULT_WIDTH / 2 - SURFACE_WIDTH / 2)
+    #define Y_OFFSET (DEFAULT_HEIGHT / 2 - SURFACE_HEIGHT / 2 + 100)
+    #define BOTTOM_GAP 270
+    #define RGBA 4
+    #define OUTLINE_THICKNESS 2.5
+    #define COLOR_PICKER_PATH "assets/color_palette.png"
+    #define PENCIL_PATH "assets/pencil.png"
+    #define RUBBER_PATH "assets/rubber.png"
+    #define COLOR_PICKER_WIDTH 820.0f
+    #define COLOR_PICKER_HEIGHT 528.0f
     #include <SFML/Graphics.h>
     #include "struct.h"
 
@@ -53,5 +62,7 @@ int disp_help(surface_t *surface, sfRenderWindow *window);
 int disp_about(surface_t *surface, sfRenderWindow *window);
 void clear_surface(surface_t *surface);
 int set_pencil(surface_t *surface, sfRenderWindow *window);
+void destroy_all(sfRenderWindow *window, button_list_t *buttons,
+    surface_t *surface);
 
 #endif /* MY_PAINT */

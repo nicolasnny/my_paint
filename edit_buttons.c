@@ -36,7 +36,7 @@ static s_gui_drop_menu_t *init_brush_size(void)
     button_t *small_button = init_button((sfVector2f){-1050, -150},
         (sfVector2f){100, 40}, &small_size);
     button_t *medium_button = init_button((sfVector2f){-1200, -150},
-        (sfVector2f){100, 40}, &medium_size);
+        (sfVector2f){120, 40}, &medium_size);
     button_t *large_button = init_button((sfVector2f){-1350, -150},
         (sfVector2f){100, 40}, &large_size);
     s_gui_drop_menu_t *brush_size_menu;
@@ -54,22 +54,22 @@ static s_gui_drop_menu_t *init_brush_size(void)
 
 static s_gui_drop_menu_t *init_rubber(void)
 {
-    button_t *rubber_button = init_button((sfVector2f){-900, -50},
+    button_t *rubber_button = init_button((sfVector2f){-750, -50},
         (sfVector2f){100, 100}, &set_rubber);
     s_gui_drop_menu_t *rubber;
 
-    set_button_image(rubber_button, "assets/rubber.png");
+    set_button_image(rubber_button, RUBBER_PATH);
     rubber = new_drop_menu(rubber_button);
     return rubber;
 }
 
 static s_gui_drop_menu_t *init_pencil(void)
 {
-    button_t *pencil_button = init_button((sfVector2f){-750, -50},
+    button_t *pencil_button = init_button((sfVector2f){-600, -50},
         (sfVector2f){100, 100}, &set_pencil);
     s_gui_drop_menu_t *pencil;
 
-    set_button_image(pencil_button, "assets/pencil.png");
+    set_button_image(pencil_button, PENCIL_PATH);
     pencil = new_drop_menu(pencil_button);
     return pencil;
 }

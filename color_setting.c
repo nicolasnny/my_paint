@@ -30,8 +30,10 @@ int set_color(surface_t *surface, sfRenderWindow *window,
 {
     sfVector2i mouse_pos = sfMouse_getPosition((sfWindow *)window);
     sfVector2f final_pos = {
-        (float)(mouse_pos.x - 1600) / 200.0f * 820.0f,
-        (float)(mouse_pos.y - 20) / 200.0f * 528.0f
+        (float)(mouse_pos.x - color_button->position.x * -1) /
+            color_button->size.x * COLOR_PICKER_WIDTH,
+        (float)(mouse_pos.y - color_button->position.y * -1) /
+            color_button->size.y * COLOR_PICKER_HEIGHT
     };
     int final_x = (int)final_pos.x;
     int final_y = (int)final_pos.y;
