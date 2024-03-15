@@ -11,10 +11,8 @@
 static void check_options_clicked(drop_menu_list_t *menu,
     surface_t *surface, sfEvent *event, sfRenderWindow *window)
 {
-    s_gui_options_t *temp;
+    s_gui_options_t *temp = menu->menu->options;
 
-    if (menu->menu->options)
-        temp = menu->menu->options;
     while (temp) {
         if (temp->option)
             temp->option->is_clicked(temp->option, &event->mouseButton);

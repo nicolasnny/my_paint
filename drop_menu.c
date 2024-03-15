@@ -26,14 +26,11 @@ void disp_drop_menu(sfRenderWindow *window, s_gui_drop_menu_t *menu)
 
 static int delete_menu(s_gui_drop_menu_t *menu)
 {
-    s_gui_drop_menu_t *temp = menu;
+    int i = 0;
 
-    while (temp->options->next) {
-        sfRectangleShape_destroy(temp->options->option->rect);
-        free(temp->options->option);
-        temp->options = temp->options->next;
-    }
-    free(temp);
+    while (menu->delete_option(&menu, i) != ERROR_EXIT)
+        i++;
+    free(menu);
     return 0;
 }
 
@@ -63,7 +60,7 @@ static int insert_option(s_gui_drop_menu_t *menu, button_t *new_option)
 
     if (!menu || !new_option)
         return ERROR_EXIT;
-    if (!menu->options->option)
+    if (!menu->options)
         new_option_list->next = NULL;
     else
         new_option_list->next = menu->options;
@@ -80,10 +77,8 @@ s_gui_drop_menu_t *new_drop_menu(button_t *menu_button)
     s_gui_drop_menu_t *new_menu = malloc(sizeof(s_gui_drop_menu_t));
 
     new_menu->button = malloc(sizeof(button_t));
-    new_menu->options = malloc(sizeof(s_gui_options_t));
+    new_menu->options = NULL;
     new_menu->button = menu_button;
-    new_menu->options->option = NULL;
-    new_menu->options->next = NULL;
     new_menu->insert_option = &insert_option;
     new_menu->delete_menu = &delete_menu;
     new_menu->delete_option = &delete_option;

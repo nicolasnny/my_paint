@@ -24,14 +24,7 @@ void check_menu_disp(sfRenderWindow *window, drop_menu_list_t *menu_list)
     }
 }
 
-int delete_menu_list(struct drop_menu_list_s *bar)
-{
-    free(bar->menu);
-    free(bar);
-    return 0;
-}
-
-int delete_menu(struct drop_menu_list_s **bar, int menu_id)
+int delete_menu(drop_menu_list_t **bar, int menu_id)
 {
     drop_menu_list_t *temp = *bar;
     drop_menu_list_t *prev = NULL;
@@ -49,6 +42,17 @@ int delete_menu(struct drop_menu_list_s **bar, int menu_id)
     temp->menu->delete_menu(temp->menu);
     free(temp);
     return SUCCESS_EXIT;
+}
+
+int delete_menu_list(drop_menu_list_t *bar)
+{
+    int i = 0;
+
+    while (bar->delete_menu(&bar, i) != ERROR_EXIT)
+        i++;
+    free(bar->menu);
+    free(bar);
+    return 0;
 }
 
 static int insert_menu(drop_menu_list_t *bar, s_gui_drop_menu_t *menu)

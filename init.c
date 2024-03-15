@@ -78,6 +78,5 @@ int init(void)
         sfRenderWindow_drawSprite(window, surface->surface_sprite, NULL);
         sfRenderWindow_display(window);
     }
-    destroy_all(window, buttons, surface);
     return 0;
 }
