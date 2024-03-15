@@ -14,7 +14,7 @@ static void check_options_clicked(drop_menu_list_t *menu,
     s_gui_options_t *temp = menu->menu->options;
 
     while (temp) {
-        if (temp->option)
+        if (temp->option && event->type == sfEvtMouseButtonPressed)
             temp->option->is_clicked(temp->option, &event->mouseButton);
         if (temp->option && temp->option->state == PRESSED &&
             temp->option->functionnality && temp->option->collidable)
@@ -50,8 +50,10 @@ void check_menu_clicked(drop_menu_list_t *menu_list, sfEvent *event,
     drop_menu_list_t *temp_menu_list = menu_list;
 
     while (temp_menu_list) {
-        temp_menu_list->menu->button->is_clicked(
-            temp_menu_list->menu->button, &event->mouseButton);
+        if (temp_menu_list->menu->button &&
+            event->type == sfEvtMouseButtonPressed)
+            temp_menu_list->menu->button->is_clicked(
+                temp_menu_list->menu->button, &event->mouseButton);
         if (temp_menu_list->menu->button->state == PRESSED)
             change_options_state(temp_menu_list->menu->options);
         if (temp_menu_list->menu->button->state == PRESSED &&
