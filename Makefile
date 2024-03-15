@@ -9,6 +9,15 @@
 SRC	=	button.c			\
 		drop_menu.c			\
 		drop_menu_list.c	\
+		menu_hovering.c		\
+		click_options.c		\
+		color_setting.c		\
+		file_buttons.c		\
+		file_managment.c	\
+		help_managment.c	\
+		edit_buttons.c		\
+		menu_events.c		\
+		draw.c				\
 		init.c				\
 		main.c
 
@@ -28,12 +37,10 @@ CFLAGS	=	-Wall -Wextra
 
 CS_REPORT = coding-style-reports.log
 
-all:	lib	$(NAME)
-
-lib: fclean
-	$(MAKE) -C lib/my
+all:	$(NAME)
 
 $(NAME):	$(OBJ)
+	$(MAKE) -C lib/my
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:
@@ -49,6 +56,10 @@ re:	fclean all
 
 debug:	CFLAGS += -g3
 debug:	re
+
+asan:	CC	=	clang -fsanitize=address
+asan:	CFLAGS += -g3
+asan:	re
 
 gdb: debug
 	gdb -ex "run" -ex "bt full" -ex "detach" -ex "quit" $(NAME)

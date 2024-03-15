@@ -15,7 +15,11 @@ void disp_drop_menu(sfRenderWindow *window, s_gui_drop_menu_t *menu)
     s_gui_options_t *temp = menu->options;
 
     while (temp) {
-        sfRenderWindow_drawRectangleShape(window, temp->option->rect, NULL);
+        if (temp->option && temp->option->collidable)
+            sfRenderWindow_drawRectangleShape(window, temp->option->rect,
+                NULL);
+        if (temp->option && temp->option->collidable && temp->option->name)
+            sfRenderWindow_drawText(window, temp->option->name, NULL);
         temp = temp->next;
     }
 }

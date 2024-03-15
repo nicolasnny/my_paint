@@ -10,28 +10,16 @@
 #include "include/struct.h"
 #include "include/my_paint.h"
 
-void check_menu_list_event(sfEvent *event, drop_menu_list_t *menu_list)
-{
-    drop_menu_list_t *temp = menu_list;
-
-    while (temp) {
-        if (event->type == sfEvtMouseMoved && temp->menu)
-            temp->menu->button->is_hover(temp->menu->button,
-                &event->mouseMove);
-        if (event->type == sfEvtMouseButtonPressed && temp->menu)
-            temp->menu->button->is_clicked(temp->menu->button,
-                &event->mouseButton);
-        temp = temp->next;
-    }
-}
-
 void check_menu_disp(sfRenderWindow *window, drop_menu_list_t *menu_list)
 {
     drop_menu_list_t *temp = menu_list;
 
     while (temp) {
-        if (temp->menu && temp->menu->button->state == HOVER)
-            disp_drop_menu(window, temp->menu);
+        sfRenderWindow_drawRectangleShape(window,
+            temp->menu->button->rect, NULL);
+        if (temp->menu->button->name)
+            sfRenderWindow_drawText(window, temp->menu->button->name, NULL);
+        disp_drop_menu(window, temp->menu);
         temp = temp->next;
     }
 }
@@ -48,11 +36,11 @@ int delete_menu(struct drop_menu_list_s **bar, int menu_id)
     drop_menu_list_t *temp = *bar;
     drop_menu_list_t *prev = NULL;
 
-    while (temp != NULL && temp->id != menu_id) {
+    while (temp && temp->id != menu_id) {
         prev = temp;
         temp = temp->next;
     }
-    if (temp == NULL)
+    if (!temp)
         return ERROR_EXIT;
     if (prev == NULL)
         *bar = temp->next;
@@ -68,11 +56,16 @@ static int insert_menu(drop_menu_list_t *bar, s_gui_drop_menu_t *menu)
     static int id = 0;
     drop_menu_list_t *new_drop_menu = malloc(sizeof(drop_menu_list_t));
 
-    new_drop_menu->menu = menu;
-    new_drop_menu->id = id;
-    new_drop_menu->next = bar->next;
-    bar->next = new_drop_menu;
-    id++;
+    if (bar->menu) {
+        new_drop_menu->menu = menu;
+        new_drop_menu->id = id;
+        new_drop_menu->next = bar->next;
+        bar->next = new_drop_menu;
+        id++;
+    } else {
+        bar->menu = menu;
+        free(new_drop_menu);
+    }
     return SUCCESS_EXIT;
 }
 

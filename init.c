@@ -12,48 +12,68 @@
 #include "include/my_paint.h"
 #include "include/struct.h"
 
-void check_events(sfRenderWindow *window, drop_menu_list_t *menu_list)
+static void check_file_events(sfRenderWindow *window,
+    surface_t *surface, drop_menu_list_t *file_buttons, sfEvent *event)
+{
+    check_menu_clicked(file_buttons, event, surface, window);
+}
+
+static void check_edit_events(sfRenderWindow *window,
+    surface_t *surface, drop_menu_list_t *edit_buttons, sfEvent *event)
+{
+    check_menu_clicked(edit_buttons, event, surface, window);
+}
+
+static void check_color_events(sfRenderWindow *window,
+    surface_t *surface, drop_menu_list_t *colors, sfEvent *event)
+{
+    if (colors->menu->button->is_clicked(colors->menu->button,
+            &event->mouseButton)) {
+            set_color(surface, window, colors->menu->button);
+    }
+    colors->menu->button->is_hover(colors->menu->button, &event->mouseMove);
+    check_drawing(surface, (sfWindow *)window);
+}
+
+static button_list_t *init_buttons(void)
+{
+    button_list_t *buttons = malloc(sizeof(button_list_t));
+
+    buttons->edit_buttons = init_edit_buttons();
+    buttons->colors = init_color_buttons();
+    buttons->file_buttons = init_file_buttons();
+    return buttons;
+}
+
+static void check_events(sfRenderWindow *window, surface_t *surface,
+    button_list_t *buttons)
 {
     sfEvent *event = malloc(sizeof(sfEvent));
 
     while (sfRenderWindow_pollEvent(window, event)){
         if (event->type == sfEvtClosed)
             sfRenderWindow_close(window);
-        check_menu_list_event(event, menu_list);
+        check_file_events(window, surface, buttons->file_buttons, event);
+        check_color_events(window, surface, buttons->colors, event);
+        check_edit_events(window, surface, buttons->edit_buttons, event);
     }
+    check_menu_disp(window, buttons->file_buttons);
+    check_menu_disp(window, buttons->colors);
+    check_menu_disp(window, buttons->edit_buttons);
 }
 
 int init(void)
 {
-    sfRenderWindow *paint = sfRenderWindow_create(
+    sfRenderWindow *window = sfRenderWindow_create(
         (sfVideoMode){1920, 1080, 32}, "paint", sfResize | sfClose, NULL);
-    button_t *file_button = init_button((sfVector2f){100, -100},
-        (sfVector2f){200, 100});
-    button_t *edit_button = init_button((sfVector2f){-200, -100},
-        (sfVector2f){200, 100});
-    drop_menu_list_t *menu_list = new_drop_menu_list();
-    s_gui_drop_menu_t *file_menu = new_drop_menu(file_button);
-    s_gui_drop_menu_t *edit_menu = new_drop_menu(edit_button);
+    surface_t *surface = init_surface();
+    button_list_t *buttons = init_buttons();
 
-    file_menu->insert_option(file_menu, init_button((sfVector2f){100, -300},
-        (sfVector2f){200, 100}));
-    file_menu->insert_option(file_menu, init_button((sfVector2f){100, -500},
-        (sfVector2f){200, 100}));
-    edit_menu->insert_option(edit_menu, init_button((sfVector2f){-200, -300},
-        (sfVector2f){200, 100}));
-    edit_menu->insert_option(edit_menu, init_button((sfVector2f){-200, -500},
-        (sfVector2f){200, 100}));
-    menu_list->insert_menu(menu_list, file_menu);
-    menu_list->insert_menu(menu_list, edit_menu);
-    while (sfRenderWindow_isOpen(paint)) {
-        sfRenderWindow_clear(paint, sfWhite);
-        check_events(paint, menu_list);
-        check_menu_disp(paint, menu_list);
-        sfRenderWindow_drawRectangleShape(paint,
-            edit_menu->button->rect, NULL);
-        sfRenderWindow_drawRectangleShape(paint,
-            file_menu->button->rect, NULL);
-        sfRenderWindow_display(paint);
+    while (sfRenderWindow_isOpen(window)) {
+        sfRenderWindow_clear(window, sfColor_fromRGB(158, 158, 158));
+        check_events(window, surface, buttons);
+        sfRenderWindow_drawSprite(window, surface->surface_sprite, NULL);
+        sfRenderWindow_display(window);
     }
     return 0;
 }
