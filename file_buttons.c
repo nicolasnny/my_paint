@@ -37,7 +37,7 @@ s_gui_drop_menu_t *init_edit_menu(void)
     button_t *edit_menu_button = init_button((sfVector2f){-170, 0},
         (sfVector2f){150, 70}, NULL);
     button_t *pencil_button = init_button((sfVector2f){-170, -70},
-        (sfVector2f){150, 70}, NULL);
+        (sfVector2f){150, 70}, &set_pencil);
     button_t *rubber_button = init_button((sfVector2f){-170, -140},
         (sfVector2f){150, 70}, &set_rubber);
 

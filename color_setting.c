@@ -50,7 +50,7 @@ drop_menu_list_t *init_color_buttons(void)
         (sfVector2f){200, 200}, NULL);
     s_gui_drop_menu_t *color_menu;
 
-    set_button_image(color_button, "assets/color_palette.png");
+    set_button_image(color_button, COLOR_PICKER_PATH);
     color_menu = new_drop_menu(color_button);
     color_button_list->insert_menu(color_button_list, color_menu);
     return color_button_list;
