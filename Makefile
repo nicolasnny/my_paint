@@ -26,11 +26,7 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	=	my_paint
 
-LDFLAGS =	-L./lib/my
-
-LDLIBS	=	-lmy -l csfml-graphics -l csfml-window -l csfml-system
-
-LIBNAME	=	libmy.a
+LDLIBS	=	-l csfml-graphics -l csfml-window -l csfml-system
 
 CPPFLAGS	=	-iquote./src/include
 
@@ -41,15 +37,12 @@ CS_REPORT = coding-style-reports.log
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	$(MAKE) -C lib/my
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:
 	$(RM) $(OBJ)
-	$(MAKE) -C lib/my clean
 
 fclean:	clean
-	$(MAKE) -C lib/my fclean
 	$(RM) $(NAME)
 	$(RM) $(CS_REPORT)
 
