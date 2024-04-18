@@ -13,7 +13,9 @@
 int set_rubber(surface_t *surface, sfRenderWindow *window)
 {
     (void)window;
-    surface->last_color = surface->color;
+    if (surface->color.r != 255 || surface->color.g != 255 ||
+        surface->color.b != 255 || surface->color.a != 255)
+        surface->last_color = surface->color;
     surface->color = sfWhite;
     return SUCCESS_EXIT;
 }
