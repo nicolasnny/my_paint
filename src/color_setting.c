@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "include/struct.h"
-#include "include/my_paint.h"
+#include "struct.h"
+#include "my_paint.h"
 
 int set_rubber(surface_t *surface, sfRenderWindow *window)
 {

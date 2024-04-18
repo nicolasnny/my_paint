@@ -5,7 +5,7 @@
 ** main.c
 */
 
-#include "include/my_paint.h"
+#include "my_paint.h"
 
 int main(void)
 {

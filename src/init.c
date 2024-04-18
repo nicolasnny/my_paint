@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SFML/Graphics.h>
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 static void check_file_events(sfRenderWindow *window,
     surface_t *surface, drop_menu_list_t *file_buttons, sfEvent *event)

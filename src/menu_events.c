@@ -5,8 +5,8 @@
 ** menu_events.c
 */
 
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 static void check_options_clicked(drop_menu_list_t *menu,
     surface_t *surface, sfEvent *event, sfRenderWindow *window)

@@ -6,21 +6,20 @@
 ##
 
 
-SRC	=	button.c			\
-		drop_menu.c			\
-		drop_menu_list.c	\
-		menu_hovering.c		\
-		click_options.c		\
-		color_setting.c		\
-		file_buttons.c		\
-		file_managment.c	\
-		help_managment.c	\
-		edit_buttons.c		\
-		destroy.c			\
-		menu_events.c		\
-		draw.c				\
-		init.c				\
-		main.c
+SRC	=	src/button.c			\
+		src/drop_menu.c			\
+		src/drop_menu_list.c	\
+		src/click_options.c		\
+		src/color_setting.c		\
+		src/file_buttons.c		\
+		src/file_managment.c	\
+		src/help_managment.c	\
+		src/edit_buttons.c		\
+		src/destroy.c			\
+		src/menu_events.c		\
+		src/draw.c				\
+		src/init.c				\
+		src/main.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -28,7 +27,7 @@ NAME	=	my_paint
 
 LDLIBS	=	-l csfml-graphics -l csfml-window -l csfml-system
 
-CPPFLAGS	=	-iquote./src/include
+CPPFLAGS	=	-iquote./include
 
 CFLAGS	=	-Wall -Wextra
 

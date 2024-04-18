@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "include/struct.h"
-#include "include/my_paint.h"
+#include "struct.h"
+#include "my_paint.h"
 
 void check_menu_disp(sfRenderWindow *window, drop_menu_list_t *menu_list)
 {

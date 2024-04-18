@@ -5,8 +5,8 @@
 ** destroy.c
 */
 
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 static void destroy_buttons(button_list_t *buttons)
 {

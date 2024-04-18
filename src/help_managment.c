@@ -5,8 +5,8 @@
 ** help_managment.c
 */
 
-#include "include/struct.h"
-#include "include/my_paint.h"
+#include "struct.h"
+#include "my_paint.h"
 
 int disp_about(surface_t *surface, sfRenderWindow *window)
 {

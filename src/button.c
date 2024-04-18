@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 sfBool is_hover(button_t *button, sfMouseMoveEvent *event)
 {

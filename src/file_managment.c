@@ -5,8 +5,8 @@
 ** file_managment.c
 */
 
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 int save_file(surface_t *surface, sfRenderWindow *window)
 {

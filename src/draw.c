@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include <string.h>
-#include "include/struct.h"
-#include "include/my_paint.h"
+#include "struct.h"
+#include "my_paint.h"
 
 void clear_surface(surface_t *surface)
 {

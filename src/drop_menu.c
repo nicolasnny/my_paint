@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "include/struct.h"
-#include "include/my_paint.h"
+#include "struct.h"
+#include "my_paint.h"
 
 void disp_drop_menu(sfRenderWindow *window, s_gui_drop_menu_t *menu)
 {

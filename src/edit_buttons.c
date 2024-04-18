@@ -5,8 +5,8 @@
 ** edit_buttons.c
 */
 
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 int large_size(surface_t *surface, sfRenderWindow *window)
 {

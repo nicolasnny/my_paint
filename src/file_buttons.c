@@ -5,8 +5,8 @@
 ** file_buttons.c
 */
 
-#include "include/my_paint.h"
-#include "include/struct.h"
+#include "my_paint.h"
+#include "struct.h"
 
 s_gui_drop_menu_t *init_file_menu(void)
 {
